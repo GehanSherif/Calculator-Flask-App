@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const display = document.querySelector('.display');
+
+            // Function to send operation to the Flask backend
+            async function sendOperation(operation) {
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ operation: operation }),
+                });
+                const data = await response.json();
+
+                // Update the display with the result from the backend
+                display.textContent = data.result;
+            }
+
+            // Add event listeners to all buttons
+            document.querySelectorAll('.btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.classList.contains('equal')) {
+                        // Send the current display content as an operation to the backend
+                        sendOperation(display.textContent);
+                    } else if (this.classList.contains('operator') && this.textContent === 'AC') {
+                        // Clear the display
+                        display.textContent = '0';
+                    } else {
+                        // Update the display with button content
+                        const currentValue = display.textContent === '0' ? '' : display.textContent;
+                        display.textContent = currentValue + this.textContent;
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">0</div>
+        <button class="btn operator">+</button>
+        <button class="btn operator">-</button>
+        <button class="btn operator">*</button>
+        <button class="btn operator">%</button>
+        <button class="btn digit">7</button>
+        <button class="btn digit">8</button>
+        <button class="btn digit">9</button>
+        <button class="btn digit">4</button>
+        <button class="btn digit">5</button>
+        <button class="btn digit">6</button>
+        <button class="btn digit">1</button>
+        <button class="btn digit">2</button>
+        <button class="btn digit">3</button>
+        <button class="btn digit">0</button>
+        <button class="btn digit">.</button>
+        <button class="btn operator">AC</button>
+        <button class="btn equal">=</button>
+    </div>
+</body>
+</html>
