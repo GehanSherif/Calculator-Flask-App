@@ -1,0 +1,71 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f2;
+}
+
+.calculator {
+    width: 400px; /* Adjusted width to fit four buttons per row */
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four columns */
+    gap: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.display {
+    grid-column: span 4; /* Adjusted to span three columns */
+    background: #000;
+    color: #fff;
+    text-align: right;
+    padding: 20px;
+    font-size: 2em;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.btn {
+    padding: 20px;
+    border: none;
+    font-size: 1.5em;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.btn.digit, .btn.operator {
+    background: #e0e0e0;
+}
+
+.btn.operator {
+    background: #fe9241;
+    color: #fff;
+}
+
+.btn.operator.ac { /* AC button styled distinctly */
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn.equal {
+    grid-column: 4 / 5; /* Position in the first column */
+    grid-row: 3 / 7; /* Span three rows, starting from the second row */
+    background: #2ecc71;
+    color: #fff;
+}
+
+
+.btn:hover {
+    background-color: #d6d6d6;
+}
+
+.btn.operator:hover, .btn.operator.ac:hover, .btn.equal:hover {
+    background-color: #a6a6a6;
+}
