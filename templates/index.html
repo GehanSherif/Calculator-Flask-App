@@ -8,21 +8,26 @@
         document.addEventListener('DOMContentLoaded', function() {
             const display = document.querySelector('.display');
 
-            // Function to send operation to the Flask backend
-            async function sendOperation(operation) {
-                const response = await fetch('/calculate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ operation: operation }),
-                });
-                const data = await response.json();
-
-                // Update the display with the result from the backend
+        // Function to send operation to the Flask backend
+        async function sendOperation(operation) {
+            const response = await fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ operation: operation }),
+            });
+            const data = await response.json();
+        
+            if (data.error) {
+                // If the response JSON contains an 'error' key, display the error message
+                display.textContent = "Error: " + data.error;
+            } else {
+                // Otherwise, update the display with the result from the backend
                 display.textContent = data.result;
             }
-
+        }
+            
             // Add event listeners to all buttons
             document.querySelectorAll('.btn').forEach(button => {
                 button.addEventListener('click', function() {
